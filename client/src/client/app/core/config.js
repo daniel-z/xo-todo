@@ -14,7 +14,7 @@
 
   var config = {
     appErrorPrefix: '[todo Error] ',
-    appTitle: 'todo'
+    appTitle: 'CrossOver ToDo'
   };
 
   core.value('config', config);
