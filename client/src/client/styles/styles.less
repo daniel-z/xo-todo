@@ -1810,19 +1810,25 @@ a {
 }
 
 /*#endregion */
-
-.navbar .user img {
-    width: 30px;
-    height: 30px;
-}
-.navbar .user .name {
-  font-size: 20px;
-  color: #fff;
-  text-transform: capitalize;
-  display: inline-block;
-  position: absolute;
-  top: 16px;
-  left: 36px;
+.navbar ul.right-bar {
+  padding: 10px;
+  li.user {
+    img {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+    }
+    .name {
+      font-size: 20px;
+      color: #fff;
+      text-transform: capitalize;
+      display: inline-block;
+      margin-left: 5px;
+      margin-right: 10px;
+      position: relative;
+      top: 4px;
+    }
+  }
 }
 
 @import "_dashboard.less";
