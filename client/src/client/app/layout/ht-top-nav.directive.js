@@ -18,13 +18,17 @@
       templateUrl: 'app/layout/ht-top-nav.html'
     };
 
-    TopNavController.$inject = ['$scope', '$rootScope'];
+    TopNavController.$inject = ['$scope', '$rootScope', 'authentication', '$state'];
 
     /* @ngInject */
-    function TopNavController($scope, $rootScope) {
+    function TopNavController($scope, $rootScope, authentication, $state) {
       var vm = this;
       vm.user = {};
-
+      vm.logout = function () {
+        authentication.logout().then(function () {
+          $state.go('login');
+        });
+      };
       $scope.$watch(function() {
         return $rootScope.currentUser;
       }, function() {

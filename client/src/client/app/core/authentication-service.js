@@ -5,9 +5,9 @@
     .module('app.core')
     .service('authentication', authentication);
 
-  authentication.$inject = ['$http', '$httpParamSerializerJQLike', '$q', 'exception', 'logger'];
+  authentication.$inject = ['$http', '$httpParamSerializerJQLike', '$q', 'exception', 'logger', '$cookies', '$rootScope'];
   /* @ngInject */
-  function authentication($http, $httpParamSerializerJQLike, $q, exception, logger) {
+  function authentication($http, $httpParamSerializerJQLike, $q, exception, logger, $cookies, $rootScope) {
     this.login = function login(loginData) {
       return $http({
         method: 'POST',
@@ -17,18 +17,44 @@
       })
       .then(success)
       .catch(fail);
+    };
 
-      function success(response) {
-        return response.data;
-      }
+    function success(response) {
+      saveLoggedUser(response.data);
+      return response.data;
+    }
 
-      function fail(e) {
-        return exception.catcher('XHR Failed for Login: ')({
-          data: {
-            description: e.data.error
-          }
-        });
+    function fail(e) {
+      return exception.catcher('XHR Failed for authentication: ')({
+        data: {
+          description: e.data.error
+        }
+      });
+    }
+
+    function saveLoggedUser (response) {
+      $cookies.put('currentUser.username', response.username);
+      $cookies.put('currentUser.sessionId', response.sessionId);
+      $rootScope.currentUser = {
+        sessionId: response.sessionId,
+        username: response.username
+      };
+    }
+
+    function getLoggedUser () {
+      return {
+        username: $cookies.get('currentUser.username'),
+        sessionId: $cookies.get('currentUser.sessionId')
+      };
+    }
+
+    this.logout = function login() {
+      var sessionId = getLoggedUser().sessionId;
+      if (!sessionId) {
+        return;
       }
+      return $http.get('http://localhost:3000/user/logout?sessionId=' + sessionId)
+        .then(success, fail);
     }
   }
 })();
