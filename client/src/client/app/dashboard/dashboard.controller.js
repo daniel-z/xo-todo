@@ -22,13 +22,6 @@
       });
     }
 
-    function getMessageCount() {
-      return dataservice.getMessageCount().then(function(data) {
-        vm.messageCount = data;
-        return vm.messageCount;
-      });
-    }
-
     function getTasks() {
       return dataservice.getTasks().then(function(data) {
         vm.tasks = data;

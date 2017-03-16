@@ -1,7 +1,7 @@
 /* jshint -W079 */
 var mockData = (function() {
   return {
-    getMockPeople: getMockPeople,
+    getMockTasks: getMockTasks,
     getMockStates: getMockStates
   };
 
@@ -22,15 +22,93 @@ var mockData = (function() {
     ];
   }
 
-  function getMockPeople() {
-    return [
-      { firstName: 'John', lastName: 'Papa', age: 25, location: 'Florida' },
-      { firstName: 'Ward', lastName: 'Bell', age: 31, location: 'California' },
-      { firstName: 'Colleen', lastName: 'Jones', age: 21, location: 'New York' },
-      { firstName: 'Madelyn', lastName: 'Green', age: 18, location: 'North Dakota' },
-      { firstName: 'Ella', lastName: 'Jobs', age: 18, location: 'South Dakota' },
-      { firstName: 'Landon', lastName: 'Gates', age: 11, location: 'South Carolina' },
-      { firstName: 'Haley', lastName: 'Guthrie', age: 35, location: 'Wyoming' }
-    ];
-  }
+  function getMockTasks() {
+    var content = 'todo description, todo description, todo description, todo description todo '
+      .concat('description, todo description, todo description, todo description, todo description');
+    return {
+      open: [
+        {
+          '_id':'1','title':'Todo title',
+          'description': content,
+          'status':'notCompleted',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'2','title':'Todo title',
+          'description': content,
+          'status':'notCompleted',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'3','title':'Todo title',
+          'description': content,
+          'status':'notCompleted',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'4','title':'Todo title',
+          'description': content,
+          'status':'notCompleted',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'5','title':'Todo title',
+          'description': content,
+          'status':'notCompleted',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+      ],
+      closed: [
+        {
+          '_id':'6','title':'Todo title',
+          'description': content,
+          'status':'completed',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'7','title':'Todo title',
+          'description': content,
+          'status':'completed',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'8','title':'Todo title',
+          'description': content,
+          'status':'completed',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'9','title':'Todo title',
+          'description': content,
+          'status':'completed',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        },
+        {
+          '_id':'10','title':'Todo title',
+          'description': content,
+          'status':'completed',
+          'author':{
+            '_id':'1', 'username':'ali'
+          }
+        }]
+      };
+    }
 })();
