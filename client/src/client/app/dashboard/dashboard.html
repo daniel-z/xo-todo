@@ -5,7 +5,7 @@
         <div class="col-md-6">
           <!-- open tasks -->
           <div id="open-tasks" class="widget wgreen">
-            <div ht-widget-header title="Open Tasks" allow-collapse="true"></div>
+            <div ht-widget-header title="In Progress" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
               <!-- tasks -->
               <div class="task" ng-repeat="task in vm.tasks">
@@ -26,7 +26,7 @@
         <div class="col-md-6">
           <!-- closed tasks -->
           <div id="closed-tasks" class="widget wviolet">
-            <div ht-widget-header title="Open Tasks" allow-collapse="true"></div>
+            <div ht-widget-header title="Completed" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
               <!-- tasks -->
               <div class="task" ng-repeat="task in vm.tasks">
