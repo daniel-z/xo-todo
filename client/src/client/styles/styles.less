@@ -5,6 +5,9 @@
 @color_important: #fa3031;
 @color_violet: #932ab6;
 
+@font-bold: 'Oswald', sans-serif;
+@font-light: 'Raleway', sans-serif;
+
 * {
     /*-webkit-box-shadow: none !important;
     -ms-box-shadow: none !important;
@@ -13,15 +16,9 @@
     -webkit-text-shadow: none !important;
     -ms-text-shadow: none !important;
     text-shadow: none !important;*/
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-family: @font-light;
     -webkit-font-smoothing: antialiased;
     /*font-weight: 400;*/
-}
-
-.btn, .badge, .modal, .modal-dialog, .modal-content,
-input, select {
-    -ms-border-radius: 0 !important;
-    border-radius: 0 !important;
 }
 
 input, select {
@@ -38,40 +35,12 @@ input, select {
     text-shadow: none !important;
 }
 
-form * {
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-}
-
-input, textarea {
-    background-image: none !important;
-    border: 1px solid #ccc !important;
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-}
-
-select {
-    font-size: 13px !important;
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-}
-
 input[type="radio"], input[type="checkbox"] {
     margin: 0 0 0 !important;
     margin-right: 5px !important;
     line-height: 23px !important;
     border: 0 !important;
 }
-
-.btn {
-    background-image: none !important;
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-    font-size: 13px !important;
-}
-.btn.btn-form-md {
-    margin: 0 .5em .2em .5em;
-    width: 9em;
-}
-    .btn.btn-mini {
-        font-size: 11px !important;
-    }
 
 body {
     font-size: 13px;
@@ -93,6 +62,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 2px 0;
     color: #777;
     font-weight: 400;
+    font-family: @font-bold;
 }
 
 h2 {
@@ -118,11 +88,6 @@ h5 {
 h6 {
     font-size: 15px;
     line-height: 25px;
-}
-
-p {
-    padding: 1px 0 !important;
-    margin: 1px 0 !important;
 }
 
 a {
@@ -364,10 +329,6 @@ a.btn {
 form {
     margin: 10px;
 }
-
-    form input, form button, form textarea, form select {
-        font-size: 13px !important;
-    }
 
     form label {
         font-size: 13px;
@@ -1207,38 +1168,6 @@ form {
 
 /* maps ends */
 
-/* Users starts */
-
-.user h6 {
-    line-height: 17px !important;
-}
-
-.user {
-    font-size: 12px !important;
-    line-height: 20px !important;
-}
-
-    .user img {
-        max-width: 70px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-
-    .user .user-pic {
-        float: left;
-        width: 80px;
-    }
-
-    .user .user-details {
-        margin-left: 85px;
-    }
-
-    .user .btn {
-        font-size: 11px !important;
-    }
-
-/* Users ends */
-
 
 /*#endregion */
 
@@ -1452,16 +1381,6 @@ small {
     width: 80%;
     margin: 0 1.5em;}
 
-.user .user-pic {
-    display: block;
-    margin: auto;
-}
-
-.user .user-details {
-    margin-left: 100px;
-    margin-right: 10px;
-}
-
 .widget-content {
     padding: 1em;
     margin: 0;
@@ -1482,10 +1401,6 @@ small {
 .navbar .brand-title {
     /*margin-left: 4em;*/
     color: #FFFFFF;
-}
-
-.navbar-logo img {
-    height: 20px;
 }
 
 .today-datas li {
@@ -1888,11 +1803,6 @@ a {
         width: 5em;
     }
 
-    .user .user-details {
-        margin-left: 7em;
-        margin-right: .5em;
-    }
-
     h3 {
         font-size: 1.5em !important;
         line-height: 1.2em !important;
@@ -1900,5 +1810,32 @@ a {
 }
 
 /*#endregion */
+.navbar ul.right-bar {
+  padding: 10px;
+  li.logout i {
+    font-size: 26px;
+    color: #fff;
+    margin-right: 10px;
+    margin-top: 4px;
+  }
+  li.user {
+    img {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+    }
+    .name {
+      font-size: 20px;
+      color: #fff;
+      text-transform: capitalize;
+      display: inline-block;
+      margin-left: 5px;
+      margin-right: 10px;
+      position: relative;
+      top: 4px;
+    }
+  }
+}
 
 @import "_dashboard.less";
+@import "_login.less";
