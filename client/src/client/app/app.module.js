@@ -6,7 +6,8 @@
     'app.widgets',
     'app.dashboard',
     'app.layout',
-    'app.login'
+    'app.login',
+    'angular-md5'
   ]).run(function ($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
       var requireLogin = toState.data.requireLogin;

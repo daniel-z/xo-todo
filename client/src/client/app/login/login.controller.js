@@ -5,9 +5,9 @@
     .module('app.login')
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['$q', 'dataservice', 'authentication', 'logger', '$state'];
+  LoginController.$inject = ['$q', 'dataservice', 'authentication', 'logger', '$state', 'md5', '$rootScope'];
   /* @ngInject */
-  function LoginController($q, dataservice, authentication, logger, $state) {
+  function LoginController($q, dataservice, authentication, logger, $state, md5, $rootScope) {
     var vm = this;
     vm.title = 'Login';
     vm.bigError = $state.params.error;
@@ -21,10 +21,12 @@
       vm.error = null;
     };
 
-    function assignCurrentUser (user) {
-      console.log(user);
-      // $rootScope.currentUser = user;
-      // return user;
+    function assignCurrentUser (response) {
+      $rootScope.currentUser = {
+        sessionId: response.sessionId,
+        username: response.username
+      };
+      $state.go('dashboard');
     }
 
     function loginResponseHandler (response) {
@@ -37,7 +39,10 @@
 
     function login () {
       vm.cleanErrors();
-      authentication.login(vm.loginData).then(loginResponseHandler);
+      authentication.login({
+        username: vm.loginData.username,
+        password: md5.createHash(vm.loginData.password)
+      }).then(loginResponseHandler);
     }
 
     vm.login = login;
