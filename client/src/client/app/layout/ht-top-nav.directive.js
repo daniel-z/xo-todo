@@ -18,11 +18,19 @@
       templateUrl: 'app/layout/ht-top-nav.html'
     };
 
-    TopNavController.$inject = ['$scope'];
+    TopNavController.$inject = ['$scope', '$rootScope'];
 
     /* @ngInject */
-    function TopNavController($scope) {
+    function TopNavController($scope, $rootScope) {
       var vm = this;
+      vm.user = {};
+
+      $scope.$watch(function() {
+        return $rootScope.currentUser;
+      }, function() {
+        vm.user = $rootScope.currentUser;
+      }, true);
+
       $scope.isCollapsed = true;
     }
 

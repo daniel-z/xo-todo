@@ -28,7 +28,8 @@
     "angular-ui-router": "~0.4.2",
     "toastr": "~2.1.2",
     "angular-bootstrap": "~1.2.5",
-    "angular-md5": "^0.1.10"
+    "angular-md5": "^0.1.10",
+    "angular-cookies": "1.5.x"
   },
   "resolutions": {
     "angular": "~1.5.9"

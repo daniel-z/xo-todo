@@ -1168,38 +1168,6 @@ form {
 
 /* maps ends */
 
-/* Users starts */
-
-.user h6 {
-    line-height: 17px !important;
-}
-
-.user {
-    font-size: 12px !important;
-    line-height: 20px !important;
-}
-
-    .user img {
-        max-width: 70px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-
-    .user .user-pic {
-        float: left;
-        width: 80px;
-    }
-
-    .user .user-details {
-        margin-left: 85px;
-    }
-
-    .user .btn {
-        font-size: 11px !important;
-    }
-
-/* Users ends */
-
 
 /*#endregion */
 
@@ -1413,16 +1381,6 @@ small {
     width: 80%;
     margin: 0 1.5em;}
 
-.user .user-pic {
-    display: block;
-    margin: auto;
-}
-
-.user .user-details {
-    margin-left: 100px;
-    margin-right: 10px;
-}
-
 .widget-content {
     padding: 1em;
     margin: 0;
@@ -1443,10 +1401,6 @@ small {
 .navbar .brand-title {
     /*margin-left: 4em;*/
     color: #FFFFFF;
-}
-
-.navbar-logo img {
-    height: 20px;
 }
 
 .today-datas li {
@@ -1849,11 +1803,6 @@ a {
         width: 5em;
     }
 
-    .user .user-details {
-        margin-left: 7em;
-        margin-right: .5em;
-    }
-
     h3 {
         font-size: 1.5em !important;
         line-height: 1.2em !important;
@@ -1861,6 +1810,20 @@ a {
 }
 
 /*#endregion */
+
+.navbar .user img {
+    width: 30px;
+    height: 30px;
+}
+.navbar .user .name {
+  font-size: 20px;
+  color: #fff;
+  text-transform: capitalize;
+  display: inline-block;
+  position: absolute;
+  top: 16px;
+  left: 36px;
+}
 
 @import "_dashboard.less";
 @import "_login.less";

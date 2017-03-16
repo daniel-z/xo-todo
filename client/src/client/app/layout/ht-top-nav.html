@@ -10,10 +10,9 @@
   <div class="navbar-collapse collapse" uib-collapse="isCollapsed">
     <div class="pull-right navbar-logo">
       <ul class="nav navbar-nav pull-right">
-        <li>
-          <a ng-href="{{vm.navline.link}}" target="_blank">
-              {{vm.navline.text}}
-          </a>
+        <li class="user" ng-if="vm.user.username">
+          <img src="/images/batuser.png" alt="">
+          <span class="name">{{vm.user.username}}</span>
         </li>
         <li class="dropdown dropdown-big">
           <a href="http://twitter.com/danielzm" target="_blank"></a>
