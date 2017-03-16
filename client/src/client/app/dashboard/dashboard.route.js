@@ -26,7 +26,7 @@
             content: '<i class="fa fa-dashboard"></i> Dashboard'
           },
           data: {
-            requireLogin: false
+            requireLogin: true
           }
         }
       }

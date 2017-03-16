@@ -20,6 +20,9 @@
           templateUrl: 'app/login/login.html',
           controller: 'LoginController',
           controllerAs: 'vm',
+          params: {
+            error: ''
+          },
           data: {
             requireLogin: false
           }
