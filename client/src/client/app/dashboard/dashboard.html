@@ -3,25 +3,20 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <div class="widget wgreen">
+          <!-- open tasks -->
+          <div id="open-tasks" class="widget wgreen">
             <div ht-widget-header title="Open Tasks" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
-              <div class="task">
+              <!-- tasks -->
+              <div class="task" ng-repeat="task in vm.tasks">
                 <ul class="details">
-                  <li class="title">My ToDo Task</li>
-                  <li class="description">This is the description of the task.</li>
-                  <li class="author">Daniel Zamorano</li>
+                  <li class="title">{{task.title}}</li>
+                  <li class="description">{{task.description}}</li>
+                  <li class="author">Author: {{task.author.username}}</li>
                 </ul>
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i class="close fa fa-times" aria-hidden="true"></i>
               </div>
-              <div class="task">
-                <ul class="details">
-                  <li class="title">My ToDo Task</li>
-                  <li class="description">This is the description of the task.</li>
-                  <li class="author">Daniel Zamorano</li>
-                </ul>
-                <i class="fa fa-times" aria-hidden="true"></i>
-              </div>
+
             </div>
             <div class="widget-foot">
               <div class="clearfix"></div>
@@ -29,30 +24,26 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="widget wviolet">
-            <div ht-widget-header title="Closed Tasks" allow-collapse="true"></div>
+          <!-- closed tasks -->
+          <div id="closed-tasks" class="widget wviolet">
+            <div ht-widget-header title="Open Tasks" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
-              <div class="task">
+              <!-- tasks -->
+              <div class="task" ng-repeat="task in vm.tasks">
                 <ul class="details">
-                  <li class="title">My ToDo Task</li>
-                  <li class="description">This is the description of the task.</li>
-                  <li class="author">Daniel Zamorano</li>
+                  <li class="title">{{task.title}}</li>
+                  <li class="description">{{task.description}}</li>
+                  <li class="author">Author: {{task.author.username}}</li>
                 </ul>
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i class="close fa fa-times" aria-hidden="true"></i>
               </div>
-              <div class="task">
-                <ul class="details">
-                  <li class="title">My ToDo Task</li>
-                  <li class="description">This is the description of the task.</li>
-                  <li class="author">Daniel Zamorano</li>
-                </ul>
-                <i class="fa fa-times" aria-hidden="true"></i>
-              </div>
+
             </div>
             <div class="widget-foot">
               <div class="clearfix"></div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

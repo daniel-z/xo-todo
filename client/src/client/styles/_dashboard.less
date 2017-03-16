@@ -1,1 +1,47 @@
 // Styles for the Dashboard
+@font-bold: 'Oswald', sans-serif;
+@font-light: 'Raleway', sans-serif;
+
+#dashboard-view {
+  .task {
+    position: relative;
+    .details {
+      list-style: none;
+      padding: 10px;
+      padding-bottom: 40px;
+      margin-bottom: 15px;
+      background-color: #efefef;
+      text-align: left;
+
+      .title {
+        font-size: 18px;
+        color: #000;
+        text-transform: capitalize;
+        font-family: @font-bold;
+      }
+      .description {
+        font-size: 16px;
+        text-transform: capitalize;
+        font-family: @font-light;
+      }
+      .author {
+        display: inline-block;
+        border-radius: 20px;
+        border: 1px solid #b9b9b9;
+        padding: 3px 10px;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+      }
+    }
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      font-size: 25px;
+    }
+  }
+
+  #open-tasks {}
+  #closed-tasks {}
+}

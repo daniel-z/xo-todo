@@ -16,7 +16,7 @@
     activate();
 
     function activate() {
-      var promises = [getMessageCount(), getPeople()];
+      var promises = [getTasks()];
       return $q.all(promises).then(function() {
         logger.info('Activated Dashboard View');
       });
@@ -29,10 +29,10 @@
       });
     }
 
-    function getPeople() {
-      return dataservice.getPeople().then(function(data) {
-        vm.people = data;
-        return vm.people;
+    function getTasks() {
+      return dataservice.getTasks().then(function(data) {
+        vm.tasks = data;
+        return vm.tasks;
       });
     }
   }
