@@ -8,7 +8,7 @@
             <div ht-widget-header title="In Progress" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
               <!-- tasks -->
-              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
+              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
@@ -21,9 +21,9 @@
 
                   <div class="buttons">
                     <button class="btn btn-danger" type="button" name="cancel"
-                      ng-click="vm.toggleEditForm(task._id)">Cancel</button>
+                      ng-click="vm.toggleEditForm(task)">Cancel</button>
                     <button class="btn btn-primary" type="button" name="save"
-                      ng-click="vm.saveTask(task)"> Save </button>
+                      ng-click="vm.updateTask(task)"> Save </button>
                   </div>
                 </div>
               </div>
@@ -53,7 +53,7 @@
             <div class="widget-content text-center text-info">
 
               <!-- tasks -->
-              <div class="task" id="{{task._id}}" ng-repeat="task in vm.completedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
+              <div class="task" id="{{task._id}}" ng-repeat="task in vm.completedTasks" ng-dblclick="vm.toggleEditForm(task)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
@@ -68,7 +68,7 @@
                     <button class="btn btn-danger" type="button" name="cancel"
                       ng-click="vm.toggleEditForm(task._id)">Cancel</button>
                     <button class="btn btn-primary" type="button" name="save"
-                      ng-click="vm.saveTask(task)"> Save </button>
+                      ng-click="vm.updateTask(task)"> Save </button>
                   </div>
                 </div>
               </div>

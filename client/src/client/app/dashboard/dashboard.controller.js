@@ -31,8 +31,14 @@
       });
     }
 
-    vm.toggleEditForm = function toggleEditForm (id) {
-      var selector = '#' + id;
+    vm.toggleEditForm = function toggleEditForm (task) {
+      var currentUser = authentication.getLoggedUser();
+      if (currentUser.username != task.author.username) {
+        logger.warning('You are not allowed to edit this task details.');
+        return;
+      }
+
+      var selector = '#' + task._id;
       $(selector).find('.details').toggleClass('hidden');
       $(selector).find('.edit-form').toggleClass('hidden');
     };
@@ -44,35 +50,24 @@
       });
     }
 
-    vm.saveTask = function (task) {
+    vm.updateTask = function (task) {
       var selector = '#'+task._id,
-        title = $(selector).find('input.title').val(),
-        description = $(selector).find('textarea.description').val(),
-        data = {},
+        data = {
+          id: task._id,
+          title: $(selector).find('input.title').val(),
+          description: $(selector).find('textarea.description').val(),
+          status: task.status
+        },
         currentUser = authentication.getLoggedUser();
 
-      if (currentUser.username === task.author.username) {
-        data.title = title;
-        data.description = description;
-      }
-
       dataservice.updateTask(data).then(function (newTask) {
-        if (!newTask.errors) {
-          vm.toggleEditForm(task._id);
-          vm.updateTask(task, newTask);
+        if (newTask.errors) {
+          logger.error('Task update error: ' + newTask.message);
           return;
         }
-        logger.error('Task update error: ' + newTask.message);
-      })
-    };
-
-    vm.updateTask = function (oldTask, newTask) {
-      var oldTaskIndex = vm.tasks.map(function(task) { return task._id; }).indexOf(oldTask._id);
-      // this is just an id, not needed
-      delete newTask.author;
-      angular.merge(vm.tasks[oldTaskIndex], newTask);
-      filterTasks();
-      return;
+        vm.toggleEditForm(task);
+        getTasks();
+      });
     };
 
     vm.addtask = {
