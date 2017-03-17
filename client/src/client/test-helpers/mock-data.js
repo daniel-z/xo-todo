@@ -3,7 +3,8 @@ var mockData = (function() {
   return {
     getMockTasks: getMockTasks,
     getMockStates: getMockStates,
-    updateTask: updateTask
+    updateTask: updateTask,
+    getSingleTask: getSingleTask
   };
 
   function getMockStates() {
@@ -115,10 +116,27 @@ var mockData = (function() {
 
   function updateTask () {
     return {
-      'status':'success','data':{'__v':'0','_id':'5757e6e41b0a244b256ac1d5',
-      'title':'Todo title','description':'Todo description',
-      'status':'completed',
-      'author':'587c61662ee257006b150166'
-    }}
+      'status':'success',
+      'data':{
+        '__v':'0','_id':'5757e6e41b0a244b256ac1d5',
+        'title':'Todo title','description':'Todo description',
+        'status':'completed',
+        'author':'587c61662ee257006b150166'
+      }
+    }
   }
+
+  function getSingleTask () {
+    return {
+      '_id':'5757e6e41b0a244b256ac1d5',
+      'title':'Todo title',
+      'description':'todo description',
+      'status':'notCompleted',
+      'author': {
+        '_id':'5757e6e41b0a244b256ac1d5',
+        'username':'ali'
+      }
+    };
+  }
+
 })();
