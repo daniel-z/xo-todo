@@ -12,7 +12,7 @@
     vm.messageCount = 0;
     vm.people = [];
     vm.title = 'Dashboard';
-
+    vm.currentUser = authentication.getLoggedUser();
     activate();
 
     function activate() {
@@ -32,8 +32,7 @@
     }
 
     vm.toggleEditForm = function toggleEditForm (task) {
-      var currentUser = authentication.getLoggedUser();
-      if (currentUser.username != task.author.username) {
+      if (vm.currentUser.username != task.author.username) {
         logger.warning('You are not allowed to edit this task details.');
         return;
       }
@@ -57,8 +56,7 @@
           title: $(selector).find('input.title').val(),
           description: $(selector).find('textarea.description').val(),
           status: task.status
-        },
-        currentUser = authentication.getLoggedUser();
+        };
 
       dataservice.updateTask(data).then(function (newTask) {
         if (newTask.errors) {
@@ -67,6 +65,7 @@
         }
         vm.toggleEditForm(task);
         getTasks();
+        logger.info('Task "' + task.title + '" updated successfully.');
       });
     };
 
@@ -86,9 +85,23 @@
       function addNewTaskHandler (response) {
         if (!response.errors) {
           getTasks();
+          logger.info('Task "' + vm.addtask.title + '" added successfully.');
+          vm.toggleAddTaskForm ();
+          vm.addtask = {};
         }
       }
     };
+
+    vm.deleteTask = function addNewTask (task) {
+      dataservice.deleteTask({id: task._id}).then(deleteTaskHandler);
+      function deleteTaskHandler (response) {
+        if (response.errors) {
+          return;
+        }
+        logger.info('Task "' + task.title + '" deleted successfully.');
+        getTasks();
+      }
+    }
 
   }
 })($);

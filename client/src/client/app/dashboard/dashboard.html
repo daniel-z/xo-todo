@@ -13,7 +13,7 @@
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
                   <li class="author">Author: {{task.author.username}}</li>
-                  <i class="close fa fa-times" aria-hidden="true"></i>
+                  <i ng-if="task.author.username === vm.currentUser.username" ng-click="vm.deleteTask(task)" class="close fa fa-times" aria-hidden="true"></i>
                 </ul>
                 <div class="edit-form hidden">
                   <input type="text" name="title" class="title form-control" value="{{task.title}}">
@@ -58,7 +58,7 @@
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
                   <li class="author">Author: {{task.author.username}}</li>
-                  <i class="close fa fa-times" aria-hidden="true"></i>
+                  <i ng-if="task.author.username === vm.currentUser.username" ng-click="vm.deleteTask(task)" class="close fa fa-times" aria-hidden="true"></i>
                 </ul>
                 <div class="edit-form hidden">
                   <input type="text" name="title" class="title form-control" value="{{task.title}}">

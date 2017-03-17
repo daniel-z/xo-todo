@@ -11,7 +11,8 @@
     var service = {
       getTasks: getTasks,
       updateTask: updateTask,
-      addTask: addTask
+      addTask: addTask,
+      deleteTask: deleteTask,
     };
 
     return service;
@@ -47,7 +48,7 @@
       }
 
       function fail(e) {
-        return exception.catcher('XHR Failed for getTasks')(e);
+        return exception.catcher('XHR Failed for updateTasks')(e);
       }
     }
 
@@ -66,7 +67,25 @@
       }
 
       function fail(e) {
-        return exception.catcher('XHR Failed for getTasks')(e);
+        return exception.catcher('XHR Failed for addTask')(e);
+      }
+    }
+    function deleteTask (data) {
+      return $http({
+        method: 'DELETE',
+        url: 'http://localhost:3000/todo?sessionId=' + $rootScope.currentUser.sessionId,
+        data: $httpParamSerializerJQLike(data),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(success)
+      .catch(fail);
+
+      function success(response) {
+        return response.data.data;
+      }
+
+      function fail(e) {
+        return exception.catcher('XHR Failed for deleteTask')(e);
       }
     }
   }
