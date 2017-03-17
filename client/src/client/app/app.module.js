@@ -2,13 +2,13 @@
   'use strict';
 
   angular.module('app', [
+    'ngCookies',
+    'angular-md5',
     'app.core',
     'app.widgets',
     'app.dashboard',
     'app.layout',
-    'app.login',
-    'angular-md5',
-    'ngCookies'
+    'app.login'
   ])
   .run(function ($rootScope, $cookies) {
       if ($cookies.get('currentUser.username') && $cookies.get('currentUser.sessionId')) {
@@ -17,7 +17,7 @@
         $rootScope.currentUser.sessionId = $cookies.get('currentUser.sessionId');
       }
   })
-  .run(function ($rootScope, $state, $cookies) {
+  .run(function ($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
       var requireLogin = toState.data.requireLogin;
       if (requireLogin && typeof $rootScope.currentUser === 'undefined') {

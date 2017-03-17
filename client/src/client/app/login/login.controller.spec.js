@@ -5,7 +5,7 @@ describe('LoginController', function() {
 
   beforeEach(function() {
     bard.appModule('app.login');
-    bard.inject('$controller', '$log', '$q', '$rootScope', 'dataservice');
+    bard.inject('$controller', '$q', 'dataservice', 'authentication', 'logger', '$state', 'md5', '$rootScope');
   });
 
   beforeEach(function() {
@@ -24,10 +24,6 @@ describe('LoginController', function() {
     describe('after activate', function() {
       it('should have title of Login', function() {
         expect(controller.title).to.equal('Login');
-      });
-
-      it('should have logged "Activated"', function() {
-        expect($log.info.logs).to.match(/Activated/);
       });
     });
   });

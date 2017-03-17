@@ -5,14 +5,12 @@
     .module('app.dashboard')
     .controller('DashboardController', DashboardController);
 
-  DashboardController.$inject = ['$q', 'dataservice', 'logger', 'authentication'];
+  DashboardController.$inject = ['dataservice', 'logger', 'authentication'];
   /* @ngInject */
-  function DashboardController($q, dataservice, logger, authentication) {
+  function DashboardController(dataservice, logger, authentication) {
     var vm = this;
-    vm.messageCount = 0;
-    vm.people = [];
-    vm.title = 'Dashboard';
     vm.currentUser = authentication.getLoggedUser();
+
     activate();
 
     function activate() {
@@ -26,6 +24,9 @@
     }
 
     function filterByStatus (status) {
+      if (!vm.tasks || !vm.tasks.filter) {
+        return;
+      }
       return vm.tasks.filter(function (task) {
         return task.status === status;
       });

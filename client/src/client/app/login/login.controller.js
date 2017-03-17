@@ -5,12 +5,15 @@
     .module('app.login')
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['$q', 'dataservice', 'authentication', 'logger', '$state', 'md5', '$rootScope'];
+  LoginController.$inject = ['dataservice', 'authentication', 'logger', '$state', 'md5', '$rootScope'];
   /* @ngInject */
-  function LoginController($q, dataservice, authentication, logger, $state, md5, $rootScope) {
+  function LoginController(dataservice, authentication, logger, $state, md5, $rootScope) {
     var vm = this;
     vm.title = 'Login';
-    vm.bigError = $state.params.error;
+    vm.bigError = '';
+    if ($state.params && $state.params.error) {
+      $state.params.error
+    };
     vm.loginData = {
       username: '',
       password: ''

@@ -70,6 +70,7 @@
         return exception.catcher('XHR Failed for addTask')(e);
       }
     }
+
     function deleteTask (data) {
       return $http({
         method: 'DELETE',

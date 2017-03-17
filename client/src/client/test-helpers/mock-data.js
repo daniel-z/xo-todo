@@ -2,7 +2,8 @@
 var mockData = (function() {
   return {
     getMockTasks: getMockTasks,
-    getMockStates: getMockStates
+    getMockStates: getMockStates,
+    updateTask: updateTask
   };
 
   function getMockStates() {
@@ -111,4 +112,13 @@ var mockData = (function() {
         }]
       };
     }
+
+  function updateTask () {
+    return {
+      'status':'success','data':{'__v':'0','_id':'5757e6e41b0a244b256ac1d5',
+      'title':'Todo title','description':'Todo description',
+      'status':'completed',
+      'author':'587c61662ee257006b150166'
+    }}
+  }
 })();
