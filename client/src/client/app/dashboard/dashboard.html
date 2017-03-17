@@ -7,14 +7,26 @@
           <div id="open-tasks" class="widget wgreen">
             <div ht-widget-header title="In Progress" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
+
               <!-- tasks -->
-              <div class="task" ng-repeat="task in vm.tasks.open">
+              <div class="task" id="{{task._id}}" ng-repeat="task in vm.completedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
-                  <li class="description">{{task.description}}</li>
+                  <li class="description" ng-bind-html="task.description"></li>
                   <li class="author">Author: {{task.author.username}}</li>
+                  <i class="close fa fa-times" aria-hidden="true"></i>
                 </ul>
-                <i class="close fa fa-times" aria-hidden="true"></i>
+                <div class="edit-form hidden">
+                  <input type="text" name="title" class="title form-control" value="{{task.title}}">
+                  <textarea name="description" class="description form-control" rows="3" cols="80">{{task.description}}</textarea>
+
+                  <div class="buttons">
+                    <button class="btn btn-danger" type="button" name="cancel"
+                      ng-click="vm.toggleEditForm(task._id)">Cancel</button>
+                    <button class="btn btn-primary" type="button" name="save"
+                      ng-click="vm.saveTask(task)"> Save </button>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -28,14 +40,26 @@
           <div id="closed-tasks" class="widget wviolet">
             <div ht-widget-header title="Completed" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
+
               <!-- tasks -->
-              <div class="task" ng-repeat="task in vm.tasks.closed">
+              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
-                  <li class="description">{{task.description}}</li>
+                  <li class="description" ng-bind-html="task.description"></li>
                   <li class="author">Author: {{task.author.username}}</li>
+                  <i class="close fa fa-times" aria-hidden="true"></i>
                 </ul>
-                <i class="close fa fa-times" aria-hidden="true"></i>
+                <div class="edit-form hidden">
+                  <input type="text" name="title" class="title form-control" value="{{task.title}}">
+                  <textarea name="description" class="description form-control" rows="3" cols="80">{{task.description}}</textarea>
+
+                  <div class="buttons">
+                    <button class="btn btn-danger" type="button" name="cancel"
+                      ng-click="vm.toggleEditForm(task._id)">Cancel</button>
+                    <button class="btn btn-primary" type="button" name="save"
+                      ng-click="vm.saveTask(task)"> Save </button>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -43,7 +67,6 @@
               <div class="clearfix"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

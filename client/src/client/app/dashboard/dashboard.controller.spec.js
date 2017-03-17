@@ -30,9 +30,9 @@ describe('DashboardController', function() {
         expect($log.info.logs).to.match(/Activated/);
       });
 
-      it('should have 5 tasks open and 5 closed', function() {
-        expect(controller.tasks).to.have.property('open').with.lengthOf(5);
-        expect(controller.tasks).to.have.property('closed').with.lengthOf(5);
+      it('should have 5 tasks completed and 5 notCompleted', function() {
+        expect(controller.tasks).to.have.property('completed').with.lengthOf(5);
+        expect(controller.tasks).to.have.property('notCompleted').with.lengthOf(5);
       });
     });
   });

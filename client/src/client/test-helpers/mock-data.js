@@ -26,7 +26,7 @@ var mockData = (function() {
     var content = 'todo description, todo description, todo description, todo description todo '
       .concat('description, todo description, todo description, todo description, todo description');
     return {
-      open: [
+      completed: [
         {
           '_id':'1','title':'Todo title',
           'description': content,
@@ -68,7 +68,7 @@ var mockData = (function() {
           }
         },
       ],
-      closed: [
+      notCompleted: [
         {
           '_id':'6','title':'Todo title',
           'description': content,
