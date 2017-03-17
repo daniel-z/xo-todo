@@ -1,4 +1,4 @@
-(function($) {
+(function() {
   'use strict';
 
   angular
@@ -31,8 +31,18 @@
       });
     }
 
+    function getTasks() {
+      return dataservice.getTasks().then(function(data) {
+        vm.tasks = data;
+        filterTasks();
+      });
+    }
+
+    // ---------------------------------------------
+    // Update Task
+    // ---------------------------------------------
     vm.toggleEditForm = function toggleEditForm (task) {
-      if (vm.currentUser.username != task.author.username) {
+      if (vm.currentUser.username !== task.author.username) {
         logger.warning('You are not allowed to edit this task details.');
         return;
       }
@@ -41,13 +51,6 @@
       $(selector).find('.details').toggleClass('hidden');
       $(selector).find('.edit-form').toggleClass('hidden');
     };
-
-    function getTasks() {
-      return dataservice.getTasks().then(function(data) {
-        vm.tasks = data;
-        filterTasks();
-      });
-    }
 
     vm.updateTask = function (task) {
       var selector = '#'+task._id,
@@ -69,6 +72,9 @@
       });
     };
 
+    // ---------------------------------------------
+    // Add Task
+    // ---------------------------------------------
     vm.addtask = {
       title: '',
       description: '',
@@ -92,6 +98,10 @@
       }
     };
 
+    // ---------------------------------------------
+    // Delete Task
+    // ---------------------------------------------
+
     vm.deleteTask = function addNewTask (task) {
       dataservice.deleteTask({id: task._id}).then(deleteTaskHandler);
       function deleteTaskHandler (response) {
@@ -103,5 +113,47 @@
       }
     }
 
+    vm.dragTask = function dragTask (event) {
+      event.dataTransfer.setData('id', event.target.id);
+      event.dataTransfer.setData('status', $(event.target).data('status'));
+    };
+    vm.allowDrop = function (event) {
+      event.preventDefault();
+    };
+
+    vm.dropTask = function dropTask (event) {
+      event.preventDefault();
+      console.log(event);
+      var id = event.dataTransfer.getData('id'),
+        status = event.dataTransfer.getData('status'),
+        newStatus = $(event.target).closest('.widget').data('tasks-status');
+        if (status !== newStatus) {
+          updateTaskStatus(id, newStatus);
+        }
+    };
+
+    function getTaskById (id) {
+      if (!id) {
+        return;
+      }
+      var index = vm.tasks.map(function (task) { return task._id; }).indexOf(id);
+      return vm.tasks[index];
+    }
+
+    function updateTaskStatus (id, newStatus) {
+      var task = getTaskById(id),
+      data = {
+        id: task._id,
+        status: newStatus
+      };
+      dataservice.updateTask(data).then(updateTaskHandler);
+      function updateTaskHandler (response) {
+        if (response.errors) {
+          return;
+        }
+        getTasks();
+        logger.info('Task' + task.title + ' changed to status "' + newStatus + '" successfully.');
+      }
+    }
   }
-})($);
+})();

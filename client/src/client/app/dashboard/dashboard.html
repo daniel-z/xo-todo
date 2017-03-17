@@ -4,11 +4,13 @@
       <div class="row">
         <div class="col-md-6">
           <!-- open tasks -->
-          <div id="open-tasks" class="widget wgreen">
+          <div id="open-tasks" class="widget wgreen" data-tasks-status="notCompleted">
             <div ht-widget-header title="In Progress" allow-collapse="true"></div>
-            <div class="widget-content text-center text-info">
+            <div class="widget-content text-center text-info"
+              ondragover="angular.element(this).scope().vm.allowDrop(event)" ondrop="angular.element(this).scope().vm.dropTask(event)" >
               <!-- tasks -->
-              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task)">
+              <div class="task" draggable="true" id="{{task._id}}" data-status="{{task.status}}" ng-repeat="task in vm.notCompletedTasks"
+                ondragstart="angular.element(this).scope().vm.dragTask(event)" ng-dblclick="vm.toggleEditForm(task)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
@@ -48,12 +50,14 @@
         </div>
         <div class="col-md-6">
           <!-- closed tasks -->
-          <div id="closed-tasks" class="widget wviolet">
+          <div id="closed-tasks" class="widget wviolet" data-tasks-status="completed">
             <div ht-widget-header title="Completed" allow-collapse="true"></div>
-            <div class="widget-content text-center text-info">
+            <div class="widget-content text-center text-info"
+              ondragover="angular.element(this).scope().vm.allowDrop(event)" ondrop="angular.element(this).scope().vm.dropTask(event)">
 
               <!-- tasks -->
-              <div class="task" id="{{task._id}}" ng-repeat="task in vm.completedTasks" ng-dblclick="vm.toggleEditForm(task)">
+              <div class="task" draggable="true" id="{{task._id}}" data-status="{{task.status}}" ng-repeat="task in vm.completedTasks"
+                ondragstart="angular.element(this).scope().vm.dragTask(event)" ng-dblclick="vm.toggleEditForm(task)">
                 <ul class="details">
                   <li class="title">{{task.title}}</li>
                   <li class="description" ng-bind-html="task.description"></li>
