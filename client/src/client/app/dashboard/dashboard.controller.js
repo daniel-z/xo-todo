@@ -1,4 +1,4 @@
-(function() {
+(function($) {
   'use strict';
 
   angular
@@ -16,11 +16,8 @@
     activate();
 
     function activate() {
-      var promises = [getTasks()];
-      return $q.all(promises).then(function() {
-        filterTasks();
-        logger.info('Activated Dashboard View');
-      });
+      getTasks();
+      // logger.info('Activated Dashboard View');
     }
 
     function filterTasks () {
@@ -43,6 +40,7 @@
     function getTasks() {
       return dataservice.getTasks().then(function(data) {
         vm.tasks = data;
+        filterTasks();
       });
     }
 
@@ -76,5 +74,26 @@
       filterTasks();
       return;
     };
+
+    vm.addtask = {
+      title: '',
+      description: '',
+      status: 'notCompleted'
+    };
+
+    vm.toggleAddTaskForm = function toggleAddTaskForm () {
+      $('#add-task').toggleClass('hidden');
+      $('.add-task-btn').toggleClass('hidden');
+    };
+
+    vm.addNewTask = function addNewTask () {
+      dataservice.addTask(vm.addtask).then(addNewTaskHandler);
+      function addNewTaskHandler (response) {
+        if (!response.errors) {
+          getTasks();
+        }
+      }
+    };
+
   }
-})();
+})($);

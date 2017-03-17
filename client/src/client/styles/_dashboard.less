@@ -49,6 +49,26 @@
     }
   }
 
-  #open-tasks {}
+  #open-tasks {
+    form#add-task {
+      text-align: center;
+      margin: 10px 0;
+      input {
+        margin: 5px 0;
+      }
+      textarea {
+        padding: 4px;
+      }
+      .ng-invalid.ng-touched {
+        border: 1px solid #FF0000;
+      }
+      button {
+        margin-top: 5px;
+      }
+    }
+    .widget-foot {
+      text-align: center;
+    }
+  }
   #closed-tasks {}
 }

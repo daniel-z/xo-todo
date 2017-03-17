@@ -7,6 +7,50 @@
           <div id="open-tasks" class="widget wgreen">
             <div ht-widget-header title="In Progress" allow-collapse="true"></div>
             <div class="widget-content text-center text-info">
+              <!-- tasks -->
+              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
+                <ul class="details">
+                  <li class="title">{{task.title}}</li>
+                  <li class="description" ng-bind-html="task.description"></li>
+                  <li class="author">Author: {{task.author.username}}</li>
+                  <i class="close fa fa-times" aria-hidden="true"></i>
+                </ul>
+                <div class="edit-form hidden">
+                  <input type="text" name="title" class="title form-control" value="{{task.title}}">
+                  <textarea name="description" class="description form-control" rows="3" cols="80">{{task.description}}</textarea>
+
+                  <div class="buttons">
+                    <button class="btn btn-danger" type="button" name="cancel"
+                      ng-click="vm.toggleEditForm(task._id)">Cancel</button>
+                    <button class="btn btn-primary" type="button" name="save"
+                      ng-click="vm.saveTask(task)"> Save </button>
+                  </div>
+                </div>
+              </div>
+              <!-- end task -->
+            </div>
+            <div class="widget-foot">
+              <form id="add-task" class="hidden">
+                <input class="form-control" type="text" name="title" value="" required
+                  ng-model="vm.addtask.title" ng-model-options="{ updateOn: 'blur' }"
+                  placeholder="Add Task Title">
+                <textarea class="form-control" name="description" rows="3" cols="80" required
+                  ng-model="vm.addtask.description" ng-model-options="{ updateOn: 'blur' }"
+                  placeholder="Add Task Description"></textarea>
+                <button class="btn btn-danger" type="button" name="cancel" ng-click="vm.toggleAddTaskForm()">cancel</button>
+                <button class="btn btn-success" type="submit" name="save" ng-click="vm.addNewTask()">Save</button>
+              </form>
+              <button class="add-task-btn btn btn-primary" type="button" name="add" ng-click="vm.toggleAddTaskForm()">Add New Task</button>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <!-- end open tasks -->
+        </div>
+        <div class="col-md-6">
+          <!-- closed tasks -->
+          <div id="closed-tasks" class="widget wviolet">
+            <div ht-widget-header title="Completed" allow-collapse="true"></div>
+            <div class="widget-content text-center text-info">
 
               <!-- tasks -->
               <div class="task" id="{{task._id}}" ng-repeat="task in vm.completedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
@@ -34,39 +78,7 @@
               <div class="clearfix"></div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <!-- closed tasks -->
-          <div id="closed-tasks" class="widget wviolet">
-            <div ht-widget-header title="Completed" allow-collapse="true"></div>
-            <div class="widget-content text-center text-info">
-
-              <!-- tasks -->
-              <div class="task" id="{{task._id}}" ng-repeat="task in vm.notCompletedTasks" ng-dblclick="vm.toggleEditForm(task._id)">
-                <ul class="details">
-                  <li class="title">{{task.title}}</li>
-                  <li class="description" ng-bind-html="task.description"></li>
-                  <li class="author">Author: {{task.author.username}}</li>
-                  <i class="close fa fa-times" aria-hidden="true"></i>
-                </ul>
-                <div class="edit-form hidden">
-                  <input type="text" name="title" class="title form-control" value="{{task.title}}">
-                  <textarea name="description" class="description form-control" rows="3" cols="80">{{task.description}}</textarea>
-
-                  <div class="buttons">
-                    <button class="btn btn-danger" type="button" name="cancel"
-                      ng-click="vm.toggleEditForm(task._id)">Cancel</button>
-                    <button class="btn btn-primary" type="button" name="save"
-                      ng-click="vm.saveTask(task)"> Save </button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="widget-foot">
-              <div class="clearfix"></div>
-            </div>
-          </div>
+          <!-- end closed tasks -->
         </div>
       </div>
     </div>

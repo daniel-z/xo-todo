@@ -4,8 +4,8 @@ var users = require('./users');
 
 //defining schema for videos table
 var todoSchema = new mongoose.Schema({
-	  title: { type: String,  required: true}, 
-	  description: { type: String }, 
+	  title: { type: String,  required: true},
+	  description: { type: String },
 	  status: {type: String, enum:["completed", "notCompleted"]},
 	  author: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'}
 });
@@ -30,12 +30,12 @@ todosModel.seed = function(){
 
 		Todos.collection.insert(todos, function(err, todos) {
 			if(err){
-				console.log('error occured in populating database');	
-				console.log(err);	
-			} 
+				console.log('error occured in populating database');
+				console.log(err);
+			}
 			else{
-				console.log('Todos collection populated.');	
-			}	
+				console.log('Todos collection populated.');
+			}
 		});
 	});
 }
@@ -50,11 +50,11 @@ todosModel.get = function(skip, limit){
 	Todos.find({}).populate("author", "username").skip(skip).limit(limit).exec(function(err, dbTodos) {
 		if (err){
 			results.reject(err);
-		} 
+		}
 		results.resolve(dbTodos);
 	});;
 
-	return results.promise;	
+	return results.promise;
 }
 
 //function to delete todos
@@ -74,14 +74,14 @@ todosModel.delete = function(todoId, author){
 			res.status = "error";
 			res.data = "No todo found with this id";
 			results.reject(res);
-			return;	
+			return;
 		}
 
 		if(String(dbTodos.author)!==String(author._id)) {
 			res.status = "error";
 			res.data = "You are not the owner of this todo";
 			results.reject(res);
-			return;	
+			return;
 		}
 
 		dbTodos.remove(function (err,removed) {
@@ -95,10 +95,10 @@ todosModel.delete = function(todoId, author){
 			res.data = removed;
 			results.resolve(res);
 		});
-		
+
 	});
 
-	return results.promise;	
+	return results.promise;
 }
 
 //insertOrUpdate todos
@@ -113,7 +113,7 @@ todosModel.insertOrUpdate = function(data){
 			results.reject(res);
 			return;
 		}
-		
+
 		if(dbTodos == undefined){
 			var dbTodos = new Todos();
 			dbTodos.author = data.author._id;
@@ -136,14 +136,14 @@ todosModel.insertOrUpdate = function(data){
 				res.data = err;
 				results.reject(res);
 				return;
-			} 
+			}
 			res.data = dbTodo;
 			results.resolve(res);
 			return;
 		});
 	});
 	return results.promise;
-	
+
 }
 
 module.exports = todosModel;

@@ -2,9 +2,9 @@ var todosModel = require('../models/todos');
 
 var todos = {};
 
-// controller that handles video listings fetch request.
+// controller that handles task listings fetch request.
 todos.get = function (req, res) {
-	
+
 	var skip = req.query.skip;
 	var limit = req.query.limit;
 
@@ -19,9 +19,9 @@ todos.get = function (req, res) {
 	});
 };
 
-// controller that handles single video fetch request.
+// controller that handles single task fetch request.
 todos.insertOrUpdate = function (req, res) {
-	
+
 	var todoObject = {};
 	todoObject.id = req.body.id || 123;
 	todoObject.title = req.body.title;
@@ -37,9 +37,9 @@ todos.insertOrUpdate = function (req, res) {
 	});
 };
 
-// controller that handles video rate request
+// controller that handles task rate request
 todos.delete = function (req, res) {
-	
+
 	var promise = todosModel.delete(req.body.id,req.authUser);
 
 	promise.then(function(todoObject){
