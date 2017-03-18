@@ -975,6 +975,27 @@ form {
         float: none;
     }
 
+    .navbar-logo,
+    .navbar ul.right-bar {
+      width: 100%;
+      li {
+        margin: 5px 0;
+        padding: 5px;
+        &:hover {
+          background-color: #fff;
+          color: #000;
+        }
+        &.logout:hover i {
+          color: #000;
+        }
+        &.user:hover {
+          span {
+            color: #000;
+          }
+        }
+      }
+    }
+
     .mainbar .bread-crumb {
         float: none;
         margin-top: 10px;
@@ -1150,10 +1171,6 @@ form {
 
     .sidebar {
         width: 200px;
-    }
-
-    .mainbar {
-        margin-left: 200px;
     }
 }
 
