@@ -217,55 +217,108 @@ describe('DashboardController', function() {
         addTaskStub.resetBehavior();
       });
     });
-    // it('',function () {});
   });
-
   // --------------
-  // deleteTask
+  // addNewTask
   // --------------
-  describe('on deleteTask', function() {
+  describe('on addNewTask', function() {
 
     it('should send correct params', function () {
-      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when(newTask));
-      var expectedData = singleTask;
-      controller.deleteTask(expectedData).then(function () {
-        var args = actionTaskStub.args[0][0];
-        expect(args.id).to.equal(expectedData._id);
-        actionTaskStub.reset();
-        actionTaskStub.resetBehavior();
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        var args = addTaskStub.args[0][0];
+        expect(args.title).to.equal(expectedData.title);
+        expect(args.description).to.equal(expectedData.description);
+        expect(args.status).to.equal(expectedData.status);
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
+      });
+    });
+
+    it('should get new tasks', function () {
+      controller.tasks = {};
+      expect(controller.tasks.completed).to.be.undefined;
+      expect(controller.tasks.notCompleted).to.be.undefined;
+
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        expect(controller.tasks.completed.length).to.equal(5);
+        expect(controller.tasks.notCompleted.length).to.equal(5);
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
       });
     });
 
     it('should log to the user on success', function () {
-      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when(newTask));
-      var expectedData = singleTask;
-      controller.deleteTask(expectedData).then(function () {
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
         expect(logger.info.called).to.be.true;
-        actionTaskStub.reset();
-        actionTaskStub.resetBehavior();
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
       });
     });
 
     it('should log to the user on error', function () {
-      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when({errors: []}));
-      var expectedData = singleTask;
-      controller.deleteTask(expectedData).then(function () {
-        expect(logger.info.called).to.be.true;
-        actionTaskStub.reset();
-        actionTaskStub.resetBehavior();
-      });
-    });
-
-    it('should log to the user on error', function () {
-      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when({errors: []}));
-      var expectedData = {};
-      controller.deleteTask(expectedData).then(function () {
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when({errors: []}));
+      expectedData = {};
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
         expect(logger.error.called).to.be.true;
-        actionTaskStub.reset();
-        actionTaskStub.resetBehavior();
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
       });
     });
-    // it('',function () {});
+  });
+
+  // --------------
+  // drag functions
+  // --------------
+  describe('on dragTask', function() {
+    it('should set the correct params', function () {
+      var id = '1234',
+      status = 'notCompleted',
+      element = angular.element('<div id="'+ id +'" data-status="'+ status +'"></div>')[0],
+      event = {
+        dataTransfer: {
+          setData: function(){},
+        },
+        target: element
+      };
+      var setDataStub = sinon.stub(event.dataTransfer, 'setData');
+      controller.dragTask(event);
+      // first call arguments
+      expect(setDataStub.args[0][0]).to.equal('id');
+      expect(setDataStub.args[0][1]).to.equal(id);
+      // second call arguments
+      expect(setDataStub.args[1][0]).to.equal('status');
+      expect(setDataStub.args[1][1]).to.equal(status);
+    });
+  });
+  describe('on allowDrop', function() {
+    it('should stop default behavior', function () {
+      var event = {preventDefault: sinon.stub()};
+      controller.allowDrop(event);
+      // first call arguments
+      expect(event.preventDefault.called).to.be.true;
+    });
   });
 
 

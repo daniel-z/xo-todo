@@ -121,6 +121,7 @@
       event.dataTransfer.setData('id', event.target.id);
       event.dataTransfer.setData('status', $(event.target).data('status'));
     };
+
     vm.allowDrop = function (event) {
       event.preventDefault();
     };
