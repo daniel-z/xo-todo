@@ -12,33 +12,30 @@
     vm.title = 'Login';
     vm.bigError = '';
     if ($state.params && $state.params.error) {
-      $state.params.error
-    };
+      vm.bigError = $state.params.error;
+    }
+
     vm.loginData = {
       username: '',
       password: ''
-    }
+    };
 
     activate();
     vm.cleanErrors = function cleanErrors () {
       vm.error = null;
     };
 
-    function assignCurrentUser (response) {
-      $state.go('dashboard');
-    }
-
     function loginResponseHandler (response) {
       if (response && response.status && response.status === 'error') {
         vm.error = response.error;
         return;
       }
-      assignCurrentUser(response);
+      $state.go('dashboard');
     }
 
     function login () {
       vm.cleanErrors();
-      authentication.login({
+      return authentication.login({
         username: vm.loginData.username,
         password: md5.createHash(vm.loginData.password)
       }).then(loginResponseHandler);

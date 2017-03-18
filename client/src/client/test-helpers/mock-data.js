@@ -5,7 +5,8 @@ var mockData = (function() {
     getMockStates: getMockStates,
     updateTask: updateTask,
     getSingleTask: getSingleTask,
-    getNewTask: getNewTask
+    getNewTask: getNewTask,
+    getLoggedUser: getLoggedUser
   };
 
   function getMockStates() {
@@ -153,5 +154,7 @@ var mockData = (function() {
       }
     };
   }
-
+  function getLoggedUser () {
+    return {'status':'success','sessionId':'a8t9Rr9bjWD2InfeFLbNS3FNg5mnFqiV','username':'ali'}
+  }
 })();

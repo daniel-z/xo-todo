@@ -46,7 +46,7 @@
         username: $cookies.get('currentUser.username'),
         sessionId: $cookies.get('currentUser.sessionId')
       };
-    }
+    };
 
     this.logout = function login() {
       var sessionId = this.getLoggedUser().sessionId;
