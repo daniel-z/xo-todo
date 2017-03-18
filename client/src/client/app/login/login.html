@@ -15,13 +15,13 @@
             <form>
               <div class="form-group">
                 <label for="user">User</label>
-                <input ng-model="vm.loginData.username" type="text" class="form-control" name="user" id="user">
+                <input required ng-model="vm.loginData.username" type="text" class="form-control" name="user" id="user">
               </div>
               <div class="form-group">
-                  <label for="password">Password</label>
-                  <input ng-model="vm.loginData.password" type="password" class="form-control" id="password" placeholder="Password">
+                <label for="password">Password</label>
+                <input required ng-model="vm.loginData.password" type="password" class="form-control" id="password" placeholder="Password">
               </div>
-              <button ng-click="vm.login()" type="button" name="login" class="btn btn-primary"> Login </button>
+              <button ng-click="vm.login()" type="submit" name="login" class="btn btn-primary"> Login </button>
             </form>
           </div>
         </div>
