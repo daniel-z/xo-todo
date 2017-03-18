@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-
+  /* global $ */
   angular
     .module('app.dashboard')
     .controller('DashboardController', DashboardController);
@@ -88,15 +88,17 @@
     };
 
     vm.addNewTask = function addNewTask () {
-      dataservice.addTask(vm.addtask).then(addNewTaskHandler);
       function addNewTaskHandler (response) {
-        if (!response.errors) {
-          getTasks();
-          logger.info('Task "' + vm.addtask.title + '" added successfully.');
-          vm.toggleAddTaskForm ();
-          vm.addtask = {};
+        if (response.errors) {
+          logger.error('Error adding new task "' + vm.addtask.title + '".');
         }
+
+        getTasks();
+        logger.info('Task "' + vm.addtask.title + '" added successfully.');
+        vm.toggleAddTaskForm ();
+        vm.addtask = {};
       }
+      return dataservice.addTask(vm.addtask).then(addNewTaskHandler);
     };
 
     // ---------------------------------------------
@@ -104,15 +106,16 @@
     // ---------------------------------------------
 
     vm.deleteTask = function addNewTask (task) {
-      dataservice.deleteTask({id: task._id}).then(deleteTaskHandler);
       function deleteTaskHandler (response) {
         if (response.errors) {
-          return;
+          logger.error('Error deleting Task: "' + task.title + '".');
+        } else {
+          logger.info('Task "' + task.title + '" deleted successfully.');
+          getTasks();
         }
-        logger.info('Task "' + task.title + '" deleted successfully.');
-        getTasks();
       }
-    }
+      return dataservice.deleteTask({id: task._id}).then(deleteTaskHandler);
+    };
 
     vm.dragTask = function dragTask (event) {
       event.dataTransfer.setData('id', event.target.id);

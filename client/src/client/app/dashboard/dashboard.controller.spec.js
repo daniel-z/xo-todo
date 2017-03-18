@@ -4,6 +4,7 @@ describe('DashboardController', function() {
   var tasks = mockData.getMockTasks();
   var updatedTask = mockData.updateTask();
   var singleTask = mockData.getSingleTask();
+  var newTask = mockData.getNewTask();
 
   beforeEach(function() {
     bard.appModule('app.dashboard');
@@ -15,6 +16,7 @@ describe('DashboardController', function() {
     sinon.stub(dataservice, 'updateTask').returns($q.when(tasks));
     sinon.stub(logger, 'info');
     sinon.stub(logger, 'error');
+    sinon.stub(logger, 'warning');
     controller = $controller('DashboardController');
     $rootScope.$apply();
   });
@@ -30,7 +32,7 @@ describe('DashboardController', function() {
       '</div>'+
     '</div>';
     $('body').append(angular.element(element));
-  };
+  }
 
   function removeTaskEditForm () {
     $('#'+singleTask._id).remove();
@@ -41,6 +43,9 @@ describe('DashboardController', function() {
     expect(controller).to.be.defined;
   });
 
+  // --------------
+  // activate
+  // --------------
   describe('after activate', function() {
     it('should have 5 tasks completed and 5 notCompleted', function() {
       expect(controller.tasks).to.have.property('completed').with.lengthOf(5);
@@ -48,9 +53,12 @@ describe('DashboardController', function() {
     });
   });
 
+  // --------------
+  // toggleEditForm
+  // --------------
   describe('on toggleEditForm', function() {
     it('should not enable form if current user is not the user of the task', function () {
-      controller.currentUser.username = "danielz";
+      controller.currentUser.username = 'danielz';
       injectTaskEditForm(singleTask);
       controller.toggleEditForm(singleTask);
       expect($('#'+singleTask._id).find('.edit-form').hasClass('hidden')).to.be.true;
@@ -59,17 +67,19 @@ describe('DashboardController', function() {
     });
 
     it('should log if current user is not the user of the task', function () {
-      controller.currentUser.username = "danielz";
+      controller.currentUser.username = 'danielz';
       injectTaskEditForm(singleTask);
-      var loggerStub = sinon.stub(logger, 'warning');
       controller.toggleEditForm(singleTask);
-      expect(loggerStub.called).to.be.true;
+      expect(logger.warning.called).to.be.true;
       removeTaskEditForm(singleTask);
     });
     // it('',function () {});
   });
 
-  describe('on task update', function() {
+  // --------------
+  // updateTask
+  // --------------
+  describe('on updateTask', function() {
     var expected = {
       title: 'my task',
       description: 'my task',
@@ -96,11 +106,11 @@ describe('DashboardController', function() {
 
     it('should call dataservice update task with correct task parameters', function() {
       controller.updateTask(singleTask);
-      var arguments = dataservice.updateTask.args[0][0];
-      expect(arguments.title).to.equal(expected.title);
-      expect(arguments.description).to.equal(expected.description);
-      expect(arguments.id).to.equal(expected.id);
-      expect(arguments.status).to.equal(expected.status);
+      var args = dataservice.updateTask.args[0][0];
+      expect(args.title).to.equal(expected.title);
+      expect(args.description).to.equal(expected.description);
+      expect(args.id).to.equal(expected.id);
+      expect(args.status).to.equal(expected.status);
     });
 
     it('should update tasks after edit', function() {
@@ -126,7 +136,7 @@ describe('DashboardController', function() {
       controller.updateTask(singleTask).then(function () {
         expect(logger.info.called).to.be.true;
       });
-    })
+    });
 
     it('should call toggle edit form function', function() {
       dataservice.updateTask.returns($q.when(singleTask));
@@ -136,7 +146,127 @@ describe('DashboardController', function() {
       });
       toggleEditForm.reset();
       toggleEditForm.resetBehavior();
-    })
+    });
   });
+
+  // --------------
+  // addNewTask
+  // --------------
+  describe('on addNewTask', function() {
+
+    it('should send correct params', function () {
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        var args = addTaskStub.args[0][0];
+        expect(args.title).to.equal(expectedData.title);
+        expect(args.description).to.equal(expectedData.description);
+        expect(args.status).to.equal(expectedData.status);
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
+      });
+    });
+
+    it('should get new tasks', function () {
+      controller.tasks = {};
+      expect(controller.tasks.completed).to.be.undefined;
+      expect(controller.tasks.notCompleted).to.be.undefined;
+
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        expect(controller.tasks.completed.length).to.equal(5);
+        expect(controller.tasks.notCompleted.length).to.equal(5);
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
+      });
+    });
+
+    it('should log to the user on success', function () {
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when(newTask));
+      expectedData = {
+        title: 'danielzm task',
+        description: 'This is my task.',
+        status: 'notCompleted'
+      };
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        expect(logger.info.called).to.be.true;
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
+      });
+    });
+
+    it('should log to the user on error', function () {
+      var addTaskStub = sinon.stub(dataservice,'addTask').returns($q.when({errors: []}));
+      expectedData = {};
+      controller.addtask = expectedData;
+      controller.addNewTask().then(function () {
+        expect(logger.error.called).to.be.true;
+        addTaskStub.reset();
+        addTaskStub.resetBehavior();
+      });
+    });
+    // it('',function () {});
+  });
+
+  // --------------
+  // deleteTask
+  // --------------
+  describe('on deleteTask', function() {
+
+    it('should send correct params', function () {
+      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when(newTask));
+      var expectedData = singleTask;
+      controller.deleteTask(expectedData).then(function () {
+        var args = actionTaskStub.args[0][0];
+        expect(args.id).to.equal(expectedData._id);
+        actionTaskStub.reset();
+        actionTaskStub.resetBehavior();
+      });
+    });
+
+    it('should log to the user on success', function () {
+      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when(newTask));
+      var expectedData = singleTask;
+      controller.deleteTask(expectedData).then(function () {
+        expect(logger.info.called).to.be.true;
+        actionTaskStub.reset();
+        actionTaskStub.resetBehavior();
+      });
+    });
+
+    it('should log to the user on error', function () {
+      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when({errors: []}));
+      var expectedData = singleTask;
+      controller.deleteTask(expectedData).then(function () {
+        expect(logger.info.called).to.be.true;
+        actionTaskStub.reset();
+        actionTaskStub.resetBehavior();
+      });
+    });
+
+    it('should log to the user on error', function () {
+      var actionTaskStub = sinon.stub(dataservice,'deleteTask').returns($q.when({errors: []}));
+      var expectedData = {};
+      controller.deleteTask(expectedData).then(function () {
+        expect(logger.error.called).to.be.true;
+        actionTaskStub.reset();
+        actionTaskStub.resetBehavior();
+      });
+    });
+    // it('',function () {});
+  });
+
 
 });

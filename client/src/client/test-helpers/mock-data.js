@@ -4,7 +4,8 @@ var mockData = (function() {
     getMockTasks: getMockTasks,
     getMockStates: getMockStates,
     updateTask: updateTask,
-    getSingleTask: getSingleTask
+    getSingleTask: getSingleTask,
+    getNewTask: getNewTask
   };
 
   function getMockStates() {
@@ -135,6 +136,20 @@ var mockData = (function() {
       'author': {
         '_id':'5757e6e41b0a244b256ac1d5',
         'username':'ali'
+      }
+    };
+  }
+
+  function getNewTask () {
+    return {
+      'status':'success',
+      'data': {
+        '__v':'0',
+        '_id':'5757e6e41b0a244b256ac1d5',
+        'title':'Todo title',
+        'description':'Todo description',
+        'status':'completed',
+        'author':'587c61662ee257006b150166'
       }
     };
   }
