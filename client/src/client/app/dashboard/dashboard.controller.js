@@ -62,7 +62,7 @@
           status: task.status
         };
 
-      dataservice.updateTask(data).then(function (newTask) {
+      return dataservice.updateTask(data).then(function (newTask) {
         if (newTask.errors) {
           logger.error('Task update error: ' + newTask.message);
           return;
@@ -124,7 +124,6 @@
 
     vm.dropTask = function dropTask (event) {
       event.preventDefault();
-      console.log(event);
       var id = event.dataTransfer.getData('id'),
         status = event.dataTransfer.getData('status'),
         newStatus = $(event.target).closest('.widget').data('tasks-status');
